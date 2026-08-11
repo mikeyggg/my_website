@@ -26,7 +26,7 @@
                             <p>{{ blog_post["subtitle"] }}</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <p class="mb.0">Posted on {{blog_post["created_at"]}}</p>
-                                <a href="{{url_for('blog',post_id=blog_post['id'],post_title=blog_post['title'].replace(' ','-').lower()) }}">"Go to post"</a>
+                                <a href="{{url_for('blog',post_id=blog_post['id'],post_title=blog_post['title'].replace(' ','-').lower()) }}" class="btn btn-secondary">Go to post</a>
                             </div>
                         </div>
                     {% endfor %}

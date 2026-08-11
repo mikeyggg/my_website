@@ -56,9 +56,13 @@ def sample_post():
 @app.route("/post/<int:post_id>/<string:post_title>")
 def blog(post_id,post_title):
     all_posts = get_projects()
-    post = (next(p for p in all_posts if p["id"] == post_id), None)
-    print(post)
-    return render_template("post.html")
+    post = next((p for p in all_posts if p["id"] == post_id), None)
+
+    if post is None:
+        return "Post not found",404
+
+    return render_template("post.html",
+                           post_data = post)
 
 if __name__ == "__main__":
     app.run(debug=True)

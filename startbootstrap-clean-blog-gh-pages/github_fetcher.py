@@ -1,8 +1,9 @@
 import requests
 import time
+from datetime import datetime
 
 GITHUB_USERNAME = "mikeyggg"
-#gets the proyects from the github api and makes the json
+
 def fetch_projects():
     url = f"https://api.github.com/users/{GITHUB_USERNAME}/repos"
     response = requests.get(url)
@@ -11,14 +12,17 @@ def fetch_projects():
     projects = []
     for i, repo in enumerate(repos, start=1):
         if repo["fork"]:
-            continue  # opcional: saltar forks
+            continue
+
+        raw_date = repo["created_at"]
+        formatted_date = datetime.strptime(raw_date, "%Y-%m-%dT%H:%M:%SZ").strftime("%B %d, %Y")
 
         projects.append({
             "id": i,
             "title": repo["name"],
             "subtitle": repo["description"] or "No description yet",
             "body": repo["description"] or "No description yet",
-            "created_at": repo["created_at"],
+            "created_at": formatted_date,
             "github_url": repo["html_url"]
         })
 
