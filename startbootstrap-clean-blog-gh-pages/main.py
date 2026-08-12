@@ -1,6 +1,7 @@
 from flask import Flask,render_template,request
 from github_fetcher import get_projects
 from email_sender import send_email
+import random
 
 app = Flask(__name__)
 
@@ -48,10 +49,14 @@ def contact():
         return render_template("contact.html")
 
 
+@app.route("/random-post")
+def random_post():
+    all_posts = get_projects()
+    post = random.choice(all_posts)
 
-@app.route("/sample-post")
-def sample_post():
-    return render_template("sample post.html")
+    return render_template("post.html",
+                           post_data =post)
+
 
 @app.route("/post/<int:post_id>/<string:post_title>")
 def blog(post_id,post_title):
